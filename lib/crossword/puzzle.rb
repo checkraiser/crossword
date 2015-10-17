@@ -1,5 +1,7 @@
 module Crossword
   class Puzzle
+    include Prawn::View
+
     attr_reader :grid, :word_list, :vertical_words
 
     def initialize(width, height=width, word_list=Crossword::Loader.load_word_list_file)
@@ -25,11 +27,12 @@ module Crossword
     end
 
     def print
-      puts "Fill row count: #{@fill_row_count}"
+      # puts "Fill row count: #{@fill_row_count}"
+      txt = ""
       across_words.each do |word|
-        word.each_char { |c| printf "#{c} " }; printf "\n"
+        word.each_char { |c| txt << "c  " }; txt << "\n"
       end
-      nil
+      text txt, size: 16
     end
 
     private
